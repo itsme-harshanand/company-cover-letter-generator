@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Cover Letter Generator</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 0; }
+
+        .header-bar {
+            background: #fff;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .title-section h1 { font-size: 20px; font-weight: 600; margin-bottom: 0.25rem; }
+        .title-section p { font-size: 13px; color: #666; }
+
+        .action-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        .action-buttons button {
+            padding: 9px 16px;
+            border: 1px solid #ddd;
+            background: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .action-buttons button:hover {
+            background: #f9f9f9;
+            border-color: #999;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+        @media (max-width: 1100px) { .main-layout { grid-template-columns: 1fr; } }
+
+        .panel {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-y: auto;
+            max-height: 900px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .panel-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #e0e0e0;
+            color: #222;
+        }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #222;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 12px;
+            background: #fff;
+            color: #333;
+            transition: all 0.2s;
+        }
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 11px;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1e5a96;
+            box-shadow: 0 0 0 3px rgba(30, 90, 150, 0.1);
+        }
+
+        .section-divider {
+            margin: 1.5rem 0;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 1rem;
+        }
+
+        .letter-wrapper {
+            position: relative;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .letter-preview {
+            background: #fff;
+            color: #000;
+            padding: 0;
+            min-height: 1100px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 11pt;
+            line-height: 1.65;
+        }
+
+        .letter-content {
+            padding: 2rem 2.2rem;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 1.8rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 2px solid #000;
+        }
+
+        .header-centered {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-box {
+            width: 45px;
+            height: 45px;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10pt;
+            font-weight: bold;
+            color: #333;
+            flex-shrink: 0;
+        }
+
+        .company-name {
+            font-size: 12.5pt;
+            font-weight: bold;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+        .company-detail {
+            font-size: 9pt;
+            color: #666;
+            margin: 2px 0;
+        }
+
+        .date-line {
+            text-align: left;
+            margin: 1.5rem 0;
+            font-size: 11pt;
+        }
+
+        .recipient-block {
+            margin: 1.5rem 0;
+            font-size: 11pt;
+            line-height: 1.5;
+        }
+        .recipient-block strong {
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        .letter-subject {
+            margin: 1.2rem 0;
+            font-size: 11pt;
+        }
+        .letter-subject strong {
+            display: block;
+        }
+
+        .greeting {
+            margin-bottom: 1rem;
+            font-size: 11pt;
+        }
+
+        .letter-body {
+            text-align: justify;
+            font-size: 11pt;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        .letter-body p {
+            margin-bottom: 0.9rem;
+        }
+
+        .closing-text {
+            margin: 1.8rem 0 0.5rem 0;
+            font-size: 11pt;
+        }
+
+        .signature-area {
+            margin-top: 2.5rem;
+            font-size: 11pt;
+        }
+        .sig-image {
+            max-width: 140px;
+            max-height: 70px;
+            margin-bottom: 0.2rem;
+            display: none;
+            background: white;
+            padding: 0;
+            border: none;
+        }
+        .sig-image.visible {
+            display: block;
+        }
+
+        .sig-name {
+            font-weight: bold;
+            margin-top: 0.5rem;
+            margin-bottom: 0.2rem;
+        }
+        .sig-title {
+            font-size: 10pt;
+            color: #666;
+        }
+
+        .footer-seal {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 9pt;
+            color: #aaa;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 1.5rem;
+        }
+        .export-buttons button {
+            flex: 1;
+            padding: 9px;
+            border: 1px solid #ddd;
+            background: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .export-buttons button:hover {
+            background: #f9f9f9;
+            border-color: #999;
+        }
+
+        .char-counter {
+            font-size: 10px;
+            color: #999;
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        @media print {
+            .panel, .header-bar, .action-buttons, .export-buttons { display: none; }
+            .letter-wrapper { border: none; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-bar">
+        <div class="title-section">
+            <h1>Cover Letter Generator</h1>
+            <p>Professional templates with multiple design styles</p>
+        </div>
+        <div class="action-buttons">
+            <button onclick="shuffleDesign()">🔀 Shuffle Design</button>
+            <button onclick="resetAll()">↻ Reset</button>
+            <button onclick="window.print()">🖨 Print/Save PDF</button>
+        </div>
+    </div>
+
+    <div class="main-layout">
+        <!-- Input Panel -->
+        <div class="panel">
+            <div class="panel-title">Company Information</div>
+
+            <div class="form-group">
+                <label>Company Name *</label>
+                <input type="text" id="companyName" placeholder="e.g., Acme Corporation" value="ACME CORPORATION" onchange="updatePreview()">
+            </div>
+
+            <div class="form-group">
+                <label>Logo / Initials</label>
+                <input type="text" id="logoText" placeholder="AC" maxlength="4" value="AC" onchange="updatePreview()">
+            </div>
+
+            <div class="form-group">
+                <label>Address</label>
+                <textarea id="companyAddress" placeholder="Street Address&#10;City, State ZIP" onchange="updatePreview()">123 Business Avenue
+New York, NY 10001</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Phone & Email</label>
+                <input type="text" id="companyPhone" placeholder="Phone" value="+1 (555) 123-4567" onchange="updatePreview()">
+                <input type="email" id="companyEmail" style="margin-top: 8px;" placeholder="Email" value="info@acme.com" onchange="updatePreview()">
+            </div>
+
+            <div class="form-group">
+                <label>Registration Number (optional)</label>
+                <input type="text" id="regNumber" placeholder="e.g., CIN, GST, etc." onchange="updatePreview()">
+            </div>
+
+            <div class="section-divider"></div>
+            <div class="panel-title">Letter Content</div>
+
+            <div class="form-group">
+                <label>Recipient (To:) *</label>
+                <textarea id="recipientBlock" placeholder="The Visa Officer&#10;Australian High Commission&#10;New Delhi" onchange="updatePreview()">To
+The Visa Officer
+Department of Home Affairs
+Australia</textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Subject Line</label>
+                <input type="text" id="letterSubject" placeholder="Letter subject" value="Professional Certification Letter" onchange="updatePreview()">
+            </div>
+
+            <div class="form-group">
+                <label>Greeting</label>
+                <input type="text" id="greeting" placeholder="Dear Sir/Madam," value="Dear Sir/Madam," onchange="updatePreview()">
+            </div>
+
+            <div class="form-group">
+                <label>Letter Body *</label>
+                <textarea id="letterBody" placeholder="Type your letter content here..." onchange="updatePreview()">This is to certify that Mr. John Doe is an employee of Acme Corporation, a registered company operating in the United States.
+
+Mr. Doe has been with our organization for the past 5 years and holds the position of Senior Manager. He is responsible for strategic planning and business development.
+
+During his tenure, Mr. Doe has demonstrated exceptional performance and commitment to the organization. We confirm that he will be on approved leave for his upcoming travel and will resume his professional duties upon return.
+
+We further confirm that Mr. Doe has strong professional and financial ties to the United States and all travel expenses will be borne by him personally.</textarea>
+                <div class="char-counter"><span id="bodyCount">0</span>/5000 characters</div>
+            </div>
+
+            <div class="form-group">
+                <label>Closing</label>
+                <select id="closing" onchange="updatePreview()">
+                    <option value="Yours sincerely,">Yours sincerely,</option>
+                    <option value="Regards,">Regards,</option>
+                    <option value="Best regards,">Best regards,</option>
+                    <option value="Kind regards,">Kind regards,</option>
+                </select>
+            </div>
+
+            <div class="section-divider"></div>
+            <div class="panel-title">Signature</div>
+
+            <div class="form-group">
+                <label>Signature Image (optional)</label>
+                <input type="file" id="signatureFile" accept="image/*" onchange="handleSignatureUpload()">
+                <div style="font-size: 10px; color: #666; margin-top: 4px;">Upload PNG or JPG - will blend seamlessly with letter</div>
+            </div>
+
+            <div class="form-group">
+                <label>Signer Name *</label>
+                <input type="text" id="signerName" placeholder="e.g., John Doe" value="John Doe" onchange="updatePreview()">
+            </div>
+
+            <div class="form-group">
+                <label>Signer Title *</label>
+                <input type="text" id="signerTitle" placeholder="e.g., Chief Executive Officer" value="Chief Executive Officer" onchange="updatePreview()">
+            </div>
+
+            <div class="export-buttons">
+                <button onclick="copyText()">📋 Copy Text</button>
+                <button onclick="window.print()">📥 Print/PDF</button>
+            </div>
+        </div>
+
+        <!-- Letter Preview -->
+        <div class="letter-wrapper">
+            <div class="letter-preview" id="letterPreview"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentTemplate = 0;
+let signatureDataUrl = null;
+
+const templates = [
+    {
+        name: 'Formal Centered',
+        bgColor: '#faf7f2',
+        headerBorder: '2px solid #000',
+        colors: { text: '#000', detail: '#666' }
+    },
+    {
+        name: 'Professional Blue',
+        bgColor: '#f5f8fc',
+        headerBorder: '3px solid #1e5a96',
+        colors: { text: '#000', detail: '#555', accent: '#1e5a96' }
+    },
+    {
+        name: 'Modern Clean',
+        bgColor: '#ffffff',
+        headerBorder: '1px solid #e0e0e0',
+        colors: { text: '#000', detail: '#666' }
+    },
+    {
+        name: 'Executive Green',
+        bgColor: '#f9faf8',
+        headerBorder: '4px solid #2d6a4f',
+        colors: { text: '#000', detail: '#555', accent: '#2d6a4f' }
+    },
+    {
+        name: 'Classic Formal',
+        bgColor: '#fefdfb',
+        headerBorder: '2px dashed #333',
+        colors: { text: '#1a1a1a', detail: '#555' }
+    }
+];
+
+function handleSignatureUpload() {
+    const file = document.getElementById('signatureFile').files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            signatureDataUrl = e.target.result;
+            updatePreview();
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function updatePreview() {
+    const template = templates[currentTemplate];
+    const companyName = document.getElementById('companyName').value || 'COMPANY NAME';
+    const logoText = document.getElementById('logoText').value || 'CO';
+    const companyAddress = document.getElementById('companyAddress').value || '';
+    const companyPhone = document.getElementById('companyPhone').value || '';
+    const companyEmail = document.getElementById('companyEmail').value || '';
+    const regNumber = document.getElementById('regNumber').value || '';
+
+    const recipientBlock = document.getElementById('recipientBlock').value || '';
+    const letterSubject = document.getElementById('letterSubject').value || '';
+    const greeting = document.getElementById('greeting').value || 'Dear Sir/Madam,';
+    const letterBody = document.getElementById('letterBody').value || '';
+    const closing = document.getElementById('closing').value || 'Yours sincerely,';
+    const signerName = document.getElementById('signerName').value || '';
+    const signerTitle = document.getElementById('signerTitle').value || '';
+
+    const bodyCount = letterBody.length;
+    document.getElementById('bodyCount').textContent = Math.min(bodyCount, 5000);
+
+    const headerHtml = `
+        <div class="header-centered">
+            <div class="logo-box">${escapeHtml(logoText)}</div>
+            <div style="text-align: center;">
+                <p class="company-name">${escapeHtml(companyName)}</p>
+                ${regNumber ? '<p class="company-detail">' + escapeHtml(regNumber) + '</p>' : ''}
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 8px;">
+            <p class="company-detail" style="margin: 1px 0;">${escapeHtml(companyAddress).replace(/\n/g, '<br>')}</p>
+            ${companyPhone ? '<p class="company-detail">' + escapeHtml(companyPhone) + '</p>' : ''}
+            ${companyEmail ? '<p class="company-detail">' + escapeHtml(companyEmail) + '</p>' : ''}
+        </div>
+    `;
+
+    const formatBody = (text) => {
+        let formatted = escapeHtml(text);
+        formatted = formatted.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        formatted = formatted.replace(/\n\n/g, '</p><p>');
+        formatted = formatted.replace(/\n/g, '<br>');
+        return '<p>' + formatted + '</p>';
+    };
+
+    let letterHtml = `
+        <div class="letter-content" style="background: ${template.bgColor}; min-height: 100%;">
+            <div class="letter-header" style="border-bottom: ${template.headerBorder}; color: ${template.colors.text};">
+                ${headerHtml}
+            </div>
+
+            <div class="date-line" style="color: ${template.colors.detail};">
+                Date: ${new Date().toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+            </div>
+
+            <div class="recipient-block" style="color: ${template.colors.text};">
+                <strong>${escapeHtml(recipientBlock).replace(/\n/g, '<br>')}</strong>
+            </div>
+
+            ${letterSubject ? '<div class="letter-subject" style="color: ' + template.colors.text + ';"><strong>Subject: ' + escapeHtml(letterSubject) + '</strong></div>' : ''}
+
+            <div class="greeting" style="color: ${template.colors.text};">${escapeHtml(greeting)}</div>
+
+            <div class="letter-body" style="color: ${template.colors.text};">
+                ${formatBody(letterBody)}
+            </div>
+
+            <div class="closing-text" style="color: ${template.colors.text};">${escapeHtml(closing)}</div>
+
+            <div class="signature-area">
+                <div id="sigContainer"></div>
+                <div class="sig-name" style="color: ${template.colors.text};">${escapeHtml(signerName)}</div>
+                <div class="sig-title" style="color: ${template.colors.detail};">${escapeHtml(signerTitle)}</div>
+            </div>
+
+            <div class="footer-seal">${template.name}</div>
+        </div>
+    `;
+
+    document.getElementById('letterPreview').innerHTML = letterHtml;
+
+    if (signatureDataUrl) {
+        const sigContainer = document.getElementById('sigContainer');
+        sigContainer.innerHTML = '<img class="sig-image visible" src="' + signatureDataUrl + '" style="background: white; display: block; margin-bottom: 0.2rem;">';
+    }
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function shuffleDesign() {
+    currentTemplate = Math.floor(Math.random() * templates.length);
+    updatePreview();
+}
+
+function resetAll() {
+    document.getElementById('companyName').value = 'ACME CORPORATION';
+    document.getElementById('logoText').value = 'AC';
+    document.getElementById('companyAddress').value = '123 Business Avenue\nNew York, NY 10001';
+    document.getElementById('companyPhone').value = '+1 (555) 123-4567';
+    document.getElementById('companyEmail').value = 'info@acme.com';
+    document.getElementById('regNumber').value = '';
+    document.getElementById('recipientBlock').value = 'To\nThe Visa Officer\nDepartment of Home Affairs\nAustralia';
+    document.getElementById('letterSubject').value = 'Professional Certification Letter';
+    document.getElementById('greeting').value = 'Dear Sir/Madam,';
+    document.getElementById('closing').value = 'Yours sincerely,';
+    document.getElementById('signerName').value = 'John Doe';
+    document.getElementById('signerTitle').value = 'Chief Executive Officer';
+    document.getElementById('letterBody').value = 'This is to certify that Mr. John Doe is an employee of Acme Corporation, a registered company operating in the United States.\n\nMr. Doe has been with our organization for the past 5 years and holds the position of Senior Manager. He is responsible for strategic planning and business development.\n\nDuring his tenure, Mr. Doe has demonstrated exceptional performance and commitment to the organization. We confirm that he will be on approved leave for his upcoming travel and will resume his professional duties upon return.\n\nWe further confirm that Mr. Doe has strong professional and financial ties to the United States and all travel expenses will be borne by him personally.';
+    signatureDataUrl = null;
+    updatePreview();
+}
+
+function copyText() {
+    const text = document.getElementById('letterPreview').innerText;
+    navigator.clipboard.writeText(text).then(() => alert('Letter copied to clipboard!'));
+}
+
+// Initialize on load
+window.addEventListener('load', () => {
+    updatePreview();
+});
+</script>
+
+</body>
+</html>

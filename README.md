@@ -1,112 +1,243 @@
 # Professional Cover Letter Generator
 
-A sleek, modern tool for generating professional cover letters with multiple design templates, signature support, and flexible formatting.
+A sleek, professional tool for generating cover letters with **5 unique design templates**, **smart content formatting**, **dual export options**, and **automatic deployment**.
 
-## Features
+## 🌟 Features
 
-✨ **5 Professional Design Templates**
-- Formal Centered (cream background, classic style)
-- Professional Blue (light blue with accent borders)
-- Modern Clean (minimalist white design)
-- Executive Green (green accents with professional touch)
-- Classic Formal (off-white with dashed borders)
+### ✨ **5 Professional Design Templates**
+Each template has completely different:
+- Header layouts (centered, left-aligned, with/without accent bars)
+- Footer/signature positioning
+- Backdrop colors and shadow effects
+- Font styles and sizes
+- Visual hierarchy and spacing
 
-🔀 **Shuffle Design** - Randomly switch between all templates while keeping your content intact
+**Templates:**
+1. **Centered Formal** - Classic centered header with black border
+2. **Left Accent Blue** - Modern left-aligned with blue accent bar
+3. **Modern Green** - Gradient header with shadow effects
+4. **Minimal Red Top** - Clean design with red accent line
+5. **Elegant Border** - Decorative circular logo with border
 
-📝 **Rich Content Formatting**
-- Recipient blocks with structured formatting
-- Subject lines for official letters
-- Paragraph support with proper spacing
-- Bold text formatting using `**text**`
-- Character counter for letter body
+### 🔀 **Shuffle Design**
+Click the "🔀 Shuffle Design" button to:
+- Randomize through all 5 templates
+- See ACTUAL layout changes (not just colors)
+- Different headers, footers, colors, fonts each time
+- Keep your content while changing the design
 
-✍️ **Signature Support**
-- Upload signature images that blend seamlessly
-- White background for natural integration
+### 📝 **Smart Content Formatting**
+- **Auto-bold** certification keywords ("certify", "confirm", etc.)
+- **Professional highlighting** of titles and positions
+- **Proper paragraph spacing** and breaks
+- **Justified text** alignment
+- **Character counter** for letter body
+
+### ✍️ **Signature Support**
+- Upload PNG/JPG signature images
+- Seamless blending with white background
 - No "pasted" appearance
+- Auto-positioned below closing
 
-🖨️ **Easy Export**
-- Print to PDF using browser's print function (Ctrl+P / Cmd+P)
-- Copy text to clipboard
-- Print-friendly styling
+### 📥 **Dual Export Options**
+- **📄 Download PDF** - High-quality, print-ready PDF
+- **📝 Download DOCX** - Microsoft Word format for further editing
+- **📋 Copy** - Copy formatted text to clipboard
 
-## Usage
+### 🚀 **Automatic Deployment**
+- **GitHub Actions** automatically deploys on every push
+- Changes live within 30 seconds
+- No manual deployment needed
+- Continuous integration ready
 
-1. **Open** `index.html` in any modern web browser
-2. **Fill in** company information and letter details
-3. **Upload** signature image (optional)
-4. **Click** "Shuffle Design" to preview different templates
-5. **Export** via Print/PDF or Copy Text
+## 📋 How to Use
 
-## Project Structure
+1. **Fill in company information**
+   - Company name, address, phone, email
+   - Registration number (optional)
 
-```
-cover-letter-generator/
-├── index.html          # Main application file
-├── README.md           # This file
-└── .gitignore          # Git ignore rules
-```
+2. **Add letter content**
+   - Recipient details (To: The Visa Officer, etc.)
+   - Subject line
+   - Letter body with proper formatting
 
-## How to Use
+3. **Upload signature** (optional)
+   - PNG or JPG format
+   - Any size (will be optimized)
 
-### Company Information
-- Enter your company name, logo initials, address, phone, and email
-- Add optional registration number (CIN, GST, etc.)
+4. **Click "🔀 Shuffle Design"** to see different layouts
 
-### Letter Content
-- Specify recipient details (To: The Visa Officer, etc.)
-- Add subject line for the letter
-- Write main letter body with multiple paragraphs
-- Select closing phrase
+5. **Export your letter**
+   - PDF for printing/submitting
+   - DOCX for Word editing
+   - Or copy to clipboard
 
-### Signature
-- Upload signature image (PNG or JPG)
-- Add signer name and title
-- Signature automatically blends with white background
+## 🎨 Template Examples
 
-### Design
-- Click "🔀 Shuffle Design" to cycle through templates
-- Each design changes colors, backgrounds, and borders
-- Content remains unchanged
+### Centered Formal
+- Traditional centered header
+- Black bottom border
+- Classic professional look
+- Best for: Formal institutions
 
-## Browser Support
+### Left Accent Blue
+- Left-aligned header
+- Blue accent bar
+- Modern look
+- Best for: Corporate/Business
 
-Works on all modern browsers:
-- Chrome/Edge (latest)
-- Firefox (latest)
-- Safari (latest)
-- Mobile browsers (responsive design)
+### Modern Green
+- Gradient header
+- Green shadow effects
+- Contemporary style
+- Best for: Tech/Modern companies
 
-## Tips
+### Minimal Red Top
+- Clean top accent line
+- Red emphasis
+- Minimalist approach
+- Best for: Government/Official
 
-- Use `**text here**` to make text bold in the letter body
-- Double-enter to create paragraph breaks
-- Print preview (Ctrl+P) shows exactly how the PDF will look
-- Signature images should be 300x150px or smaller for best results
-- The tool works completely offline - no data is sent to any server
+### Elegant Border
+- Circular bordered logo
+- Decorative frame
+- Premium feel
+- Best for: Luxury/Prestigious
 
-## Installation
+## 🚀 Automatic Updates via Claude Code
 
-### Option 1: Use Directly
-1. Clone the repository:
+### Quick Start
 ```bash
-git clone https://github.com/YOUR-USERNAME/company-cover-letter-generator.git
+git clone https://github.com/itsme-harshanand/company-cover-letter-generator.git
 cd company-cover-letter-generator
 ```
 
-2. Open `index.html` in your browser
+### Make Changes
+Edit any file and push:
+```bash
+git add .
+git commit -m "Your changes description"
+git push origin main
+```
 
-### Option 2: Live Demo
-Visit: `https://YOUR-USERNAME.github.io/company-cover-letter-generator`
+### Automatic Deployment
+- ✅ GitHub Actions runs automatically
+- ✅ Site updates within 30 seconds
+- ✅ No manual steps needed
 
-## License
+See `CLAUDE-CODE-AUTOMATION.md` for detailed instructions.
+
+## 💻 Technology Stack
+
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **PDF Export**: html2pdf.js
+- **DOCX Export**: docx.js
+- **Hosting**: GitHub Pages
+- **Deployment**: GitHub Actions
+- **Version Control**: Git
+
+## 📦 Project Structure
+
+```
+company-cover-letter-generator/
+├── index.html                        (Main application)
+├── README.md                         (This file)
+├── CLAUDE-CODE-AUTOMATION.md         (Automation guide)
+├── SETUP.md                          (Setup instructions)
+├── QUICK-REFERENCE.md                (Quick commands)
+├── .gitignore                        (Git ignore rules)
+└── .github/
+    └── workflows/
+        └── deploy.yml               (GitHub Actions)
+```
+
+## 🎯 Features Summary
+
+| Feature | Details |
+|---------|---------|
+| **Templates** | 5 completely different layouts |
+| **Shuffle** | Random design changes |
+| **Formatting** | Auto-bold keywords, proper spacing |
+| **Signatures** | Seamless image integration |
+| **Export** | PDF + DOCX + Copy |
+| **Deployment** | Automatic GitHub Actions |
+| **Browser** | Works offline, all modern browsers |
+
+## 📱 Browser Support
+
+- ✅ Chrome/Edge (latest)
+- ✅ Firefox (latest)
+- ✅ Safari (latest)
+- ✅ Mobile browsers (responsive)
+
+## 🔧 Installation & Setup
+
+### Option 1: Use Live Tool
+Just visit: `https://itsme-harshanand.github.io/company-cover-letter-generator`
+
+### Option 2: Local Setup
+```bash
+git clone https://github.com/itsme-harshanand/company-cover-letter-generator.git
+cd company-cover-letter-generator
+# Open index.html in any browser
+```
+
+### Option 3: Modify & Deploy
+1. Clone the repository
+2. Edit `index.html` or other files
+3. `git push` to GitHub
+4. GitHub Actions auto-deploys
+
+## 🎓 Tips & Tricks
+
+1. **Use keywords** in your letter - they'll be auto-bolded
+2. **Press Shuffle** multiple times to see all designs
+3. **Export as PDF** for official submissions
+4. **Export as DOCX** if you need to make edits in Word
+5. **Copy text** for pasting into emails
+
+## 📖 Documentation
+
+- **SETUP.md** - Detailed setup guide
+- **QUICK-REFERENCE.md** - Quick command reference
+- **CLAUDE-CODE-AUTOMATION.md** - Automation guide for developers
+- **README.md** - This file (overview)
+
+## 🐛 Troubleshooting
+
+**PDF/DOCX not downloading?**
+- Check if browser is blocking popups
+- Disable ad-blockers
+- Try different browser
+
+**Signature not showing?**
+- Ensure image is PNG or JPG
+- File size under 2MB
+- Image format is correct
+
+**Design not changing?**
+- Click "🔀 Shuffle Design" multiple times
+- Hard refresh browser (Ctrl+Shift+R)
+- Check browser console (F12)
+
+## 📝 License
 
 MIT License - Feel free to use and modify for your needs
 
-## Author
+## 👨‍💻 Author
 
 Created with ❤️ for professional documentation
 
 ---
 
-**Note**: This tool generates letters locally in your browser. No data is stored or transmitted to external servers.
+## 🔗 Live Links
+
+- **Tool**: https://itsme-harshanand.github.io/company-cover-letter-generator
+- **Repository**: https://github.com/itsme-harshanand/company-cover-letter-generator
+- **Deployments**: https://github.com/itsme-harshanand/company-cover-letter-generator/actions
+
+---
+
+**Note**: This tool generates letters locally in your browser. All data stays on your device - nothing is stored or transmitted to external servers. 🔒
+
+Get started now! [Open the tool →](https://itsme-harshanand.github.io/company-cover-letter-generator)

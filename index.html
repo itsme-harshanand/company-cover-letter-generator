@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Cover Letter Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
+        body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             color: #333;
             background: #f5f5f5;
@@ -42,248 +44,390 @@
             transition: all 0.2s;
         }
 
-        .action-buttons button:hover {
+        .action-buttons button:hover { 
             background: #f9f9f9;
             border-color: #999;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1fr 1.4fr;
-            gap: 1.5rem;
-            padding: 1.5rem;
+        .main-layout { 
+            display: grid; 
+            grid-template-columns: 1fr 1.4fr; 
+            gap: 1.5rem; 
+            padding: 1.5rem; 
         }
         @media (max-width: 1100px) { .main-layout { grid-template-columns: 1fr; } }
 
-        .panel {
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 1.5rem;
-            overflow-y: auto;
+        .panel { 
+            background: #fff; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            padding: 1.5rem; 
+            overflow-y: auto; 
             max-height: 900px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
-        .panel-title {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            padding-bottom: 0.75rem;
+        .panel-title { 
+            font-size: 14px; 
+            font-weight: 600; 
+            margin-bottom: 1rem; 
+            padding-bottom: 0.75rem; 
             border-bottom: 1px solid #e0e0e0;
             color: #222;
         }
 
         .form-group { margin-bottom: 1.25rem; }
-        .form-group label {
-            display: block;
-            font-size: 12px;
-            font-weight: 600;
+        .form-group label { 
+            display: block; 
+            font-size: 12px; 
+            font-weight: 600; 
             margin-bottom: 0.5rem;
             color: #222;
         }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-family: inherit;
-            font-size: 12px;
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea { 
+            width: 100%; 
+            padding: 8px 12px; 
+            border: 1px solid #ddd; 
+            border-radius: 6px; 
+            font-family: inherit; 
+            font-size: 12px; 
             background: #fff;
             color: #333;
             transition: all 0.2s;
         }
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
+        .form-group textarea { 
+            min-height: 100px; 
+            resize: vertical; 
             font-family: 'Monaco', 'Courier New', monospace;
             font-size: 11px;
         }
-        .form-group input:focus,
-        .form-group select:focus,
+        .form-group input:focus, 
+        .form-group select:focus, 
         .form-group textarea:focus {
             outline: none;
             border-color: #1e5a96;
             box-shadow: 0 0 0 3px rgba(30, 90, 150, 0.1);
         }
 
-        .section-divider {
-            margin: 1.5rem 0;
-            border-top: 1px solid #e0e0e0;
-            padding-top: 1rem;
+        .section-divider { 
+            margin: 1.5rem 0; 
+            border-top: 1px solid #e0e0e0; 
+            padding-top: 1rem; 
         }
 
-        .letter-wrapper {
-            position: relative;
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            overflow: hidden;
+        .letter-wrapper { 
+            position: relative; 
+            background: #fff; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            overflow: hidden; 
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
         .letter-preview {
-            background: #fff;
-            color: #000;
-            padding: 0;
+            background: #fff; 
+            color: #000; 
+            padding: 0; 
             min-height: 1100px;
             font-family: 'Georgia', 'Times New Roman', serif;
-            font-size: 11pt;
+            font-size: 11pt; 
             line-height: 1.65;
         }
 
-        .letter-content {
-            padding: 2rem 2.2rem;
+        .letter-content { 
+            padding: 2rem 2.2rem; 
         }
 
-        .letter-header {
-            text-align: center;
-            margin-bottom: 1.8rem;
+        /* Template 1: Centered Header */
+        .template1 .letter-header {
+            text-align: center; 
+            margin-bottom: 1.8rem; 
             padding-bottom: 1.2rem;
             border-bottom: 2px solid #000;
         }
 
-        .header-centered {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-box {
-            width: 45px;
-            height: 45px;
+        .template1 .logo-box {
+            width: 50px; 
+            height: 50px; 
             background: #f0f0f0;
-            border: 1px solid #ddd;
+            border: 1px solid #ddd; 
             border-radius: 4px;
-            display: flex;
-            align-items: center;
+            display: inline-flex; 
+            align-items: center; 
             justify-content: center;
-            font-size: 10pt;
-            font-weight: bold;
-            color: #333;
-            flex-shrink: 0;
+            font-size: 11pt; 
+            font-weight: bold; 
+            color: #333; 
+            margin-bottom: 8px;
         }
 
-        .company-name {
-            font-size: 12.5pt;
+        .template1 .company-name { 
+            font-size: 13pt; 
             font-weight: bold;
-            margin: 0;
             letter-spacing: 0.5px;
+            margin: 4px 0;
         }
-        .company-detail {
-            font-size: 9pt;
-            color: #666;
+
+        .template1 .company-detail { 
+            font-size: 9pt; 
+            color: #666; 
             margin: 2px 0;
         }
 
-        .date-line {
-            text-align: left;
-            margin: 1.5rem 0;
-            font-size: 11pt;
+        /* Template 2: Left-Aligned Header with Accent */
+        .template2 .letter-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 1.8rem;
+            padding: 1rem 1.5rem;
+            background: #f8f9fa;
+            border-left: 4px solid #1e5a96;
+            border-bottom: 1px solid #ddd;
         }
 
-        .recipient-block {
-            margin: 1.5rem 0;
-            font-size: 11pt;
+        .template2 .logo-box {
+            width: 60px; 
+            height: 60px; 
+            background: #1e5a96;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 12pt; 
+            font-weight: bold; 
+            flex-shrink: 0;
+        }
+
+        .template2 .company-info {
+            flex: 1;
+        }
+
+        .template2 .company-name { 
+            font-size: 13pt; 
+            font-weight: bold;
+            color: #1e5a96;
+            margin-bottom: 4px;
+        }
+
+        .template2 .company-detail { 
+            font-size: 8.5pt; 
+            color: #555; 
+            margin: 1px 0;
+        }
+
+        /* Template 3: Modern with Shadow */
+        .template3 .letter-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 3px solid #2d6a4f;
+            background: linear-gradient(to bottom, #fafafa, #ffffff);
+        }
+
+        .template3 .logo-box {
+            width: 55px; 
+            height: 55px; 
+            background: linear-gradient(135deg, #2d6a4f, #40916c);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 11pt; 
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(45, 106, 79, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .template3 .company-name { 
+            font-size: 13.5pt; 
+            font-weight: bold;
+            color: #2d6a4f;
+            letter-spacing: 1px;
+            margin: 6px 0;
+        }
+
+        .template3 .company-detail { 
+            font-size: 9pt; 
+            color: #555; 
+            margin: 2px 0;
+        }
+
+        /* Template 4: Minimal with Top Accent */
+        .template4 .letter-header {
+            text-align: left;
+            margin-bottom: 1.8rem;
+            padding-bottom: 1rem;
+            border-top: 4px solid #d62828;
+        }
+
+        .template4 .logo-box {
+            width: 45px; 
+            height: 45px; 
+            background: #d62828;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 10pt; 
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .template4 .company-name { 
+            font-size: 12.5pt; 
+            font-weight: bold;
+            color: #222;
+            margin: 4px 0;
+        }
+
+        .template4 .company-detail { 
+            font-size: 8.5pt; 
+            color: #777; 
+            margin: 1px 0;
+        }
+
+        /* Template 5: Elegant with Decorative Border */
+        .template5 .letter-header {
+            text-align: center;
+            margin-bottom: 1.8rem;
+            padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+            border: 2px solid #444;
+            border-radius: 4px;
+        }
+
+        .template5 .logo-box {
+            width: 50px; 
+            height: 50px; 
+            background: #444;
+            color: white;
+            border: 2px solid #888;
+            border-radius: 50%;
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 10pt; 
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .template5 .company-name { 
+            font-size: 13pt; 
+            font-weight: bold;
+            color: #222;
+            letter-spacing: 1.5px;
+            margin: 6px 0;
+        }
+
+        .template5 .company-detail { 
+            font-size: 8.5pt; 
+            color: #666; 
+            margin: 2px 0;
+            font-style: italic;
+        }
+
+        .date-line { 
+            text-align: left; 
+            margin: 1.5rem 0; 
+            font-size: 11pt; 
+        }
+
+        .recipient-block { 
+            margin: 1.5rem 0; 
+            font-size: 11pt; 
             line-height: 1.5;
         }
-        .recipient-block strong {
-            display: block;
-            margin-bottom: 0.2rem;
+
+        .letter-subject { 
+            margin: 1.2rem 0; 
+            font-size: 11pt; 
+        }
+        .letter-subject strong { 
+            display: block; 
         }
 
-        .letter-subject {
-            margin: 1.2rem 0;
-            font-size: 11pt;
-        }
-        .letter-subject strong {
-            display: block;
+        .greeting { 
+            margin-bottom: 1rem; 
+            font-size: 11pt; 
         }
 
-        .greeting {
-            margin-bottom: 1rem;
-            font-size: 11pt;
+        .letter-body { 
+            text-align: justify; 
+            font-size: 11pt; 
+            line-height: 1.7; 
+            margin-bottom: 1.5rem; 
+        }
+        .letter-body p { 
+            margin-bottom: 0.9rem; 
         }
 
-        .letter-body {
-            text-align: justify;
-            font-size: 11pt;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-        .letter-body p {
-            margin-bottom: 0.9rem;
+        .closing-text { 
+            margin: 1.8rem 0 0.5rem 0; 
+            font-size: 11pt; 
         }
 
-        .closing-text {
-            margin: 1.8rem 0 0.5rem 0;
-            font-size: 11pt;
+        .signature-area { 
+            margin-top: 2.5rem; 
+            font-size: 11pt; 
         }
-
-        .signature-area {
-            margin-top: 2.5rem;
-            font-size: 11pt;
-        }
-        .sig-image {
-            max-width: 140px;
-            max-height: 70px;
-            margin-bottom: 0.2rem;
+        .sig-image { 
+            max-width: 140px; 
+            max-height: 70px; 
+            margin-bottom: 0.2rem; 
             display: none;
-            background: white;
+            background: white; 
             padding: 0;
             border: none;
         }
-        .sig-image.visible {
-            display: block;
+        .sig-image.visible { 
+            display: block; 
         }
 
-        .sig-name {
-            font-weight: bold;
-            margin-top: 0.5rem;
-            margin-bottom: 0.2rem;
+        .sig-name { 
+            font-weight: bold; 
+            margin-top: 0.5rem; 
+            margin-bottom: 0.2rem; 
         }
-        .sig-title {
-            font-size: 10pt;
-            color: #666;
-        }
-
-        .footer-seal {
-            text-align: center;
-            margin-top: 2rem;
-            font-size: 9pt;
-            color: #aaa;
+        .sig-title { 
+            font-size: 10pt; 
+            color: #666; 
         }
 
-        .export-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 1.5rem;
+        .export-buttons { 
+            display: flex; 
+            gap: 10px; 
+            margin-top: 1.5rem; 
+            flex-wrap: wrap;
         }
-        .export-buttons button {
-            flex: 1;
-            padding: 9px;
-            border: 1px solid #ddd;
-            background: #fff;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
+        .export-buttons button { 
+            flex: 1; 
+            min-width: 120px;
+            padding: 9px; 
+            border: 1px solid #ddd; 
+            background: #fff; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 12px; 
             font-weight: 500;
             transition: all 0.2s;
         }
-        .export-buttons button:hover {
+        .export-buttons button:hover { 
             background: #f9f9f9;
             border-color: #999;
         }
 
-        .char-counter {
-            font-size: 10px;
-            color: #999;
-            text-align: right;
-            margin-top: 4px;
+        .char-counter { 
+            font-size: 10px; 
+            color: #999; 
+            text-align: right; 
+            margin-top: 4px; 
         }
 
         @media print {
@@ -298,12 +442,11 @@
     <div class="header-bar">
         <div class="title-section">
             <h1>Cover Letter Generator</h1>
-            <p>Professional templates with multiple design styles</p>
+            <p>5 Professional Templates | Smart Formatting | PDF & DOCX Export</p>
         </div>
         <div class="action-buttons">
             <button onclick="shuffleDesign()">🔀 Shuffle Design</button>
             <button onclick="resetAll()">↻ Reset</button>
-            <button onclick="window.print()">🖨 Print/Save PDF</button>
         </div>
     </div>
 
@@ -329,14 +472,18 @@ New York, NY 10001</textarea>
             </div>
 
             <div class="form-group">
-                <label>Phone & Email</label>
+                <label>Phone</label>
                 <input type="text" id="companyPhone" placeholder="Phone" value="+1 (555) 123-4567" onchange="updatePreview()">
-                <input type="email" id="companyEmail" style="margin-top: 8px;" placeholder="Email" value="info@acme.com" onchange="updatePreview()">
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="companyEmail" placeholder="Email" value="info@acme.com" onchange="updatePreview()">
             </div>
 
             <div class="form-group">
                 <label>Registration Number (optional)</label>
-                <input type="text" id="regNumber" placeholder="e.g., CIN, GST, etc." onchange="updatePreview()">
+                <input type="text" id="regNumber" placeholder="e.g., CIN, GST" onchange="updatePreview()">
             </div>
 
             <div class="section-divider"></div>
@@ -344,7 +491,7 @@ New York, NY 10001</textarea>
 
             <div class="form-group">
                 <label>Recipient (To:) *</label>
-                <textarea id="recipientBlock" placeholder="The Visa Officer&#10;Australian High Commission&#10;New Delhi" onchange="updatePreview()">To
+                <textarea id="recipientBlock" placeholder="The Visa Officer&#10;Australian High Commission" onchange="updatePreview()">To
 The Visa Officer
 Department of Home Affairs
 Australia</textarea>
@@ -388,7 +535,7 @@ We further confirm that Mr. Doe has strong professional and financial ties to th
             <div class="form-group">
                 <label>Signature Image (optional)</label>
                 <input type="file" id="signatureFile" accept="image/*" onchange="handleSignatureUpload()">
-                <div style="font-size: 10px; color: #666; margin-top: 4px;">Upload PNG or JPG - will blend seamlessly with letter</div>
+                <div style="font-size: 10px; color: #666; margin-top: 4px;">PNG or JPG (will blend with white background)</div>
             </div>
 
             <div class="form-group">
@@ -402,8 +549,9 @@ We further confirm that Mr. Doe has strong professional and financial ties to th
             </div>
 
             <div class="export-buttons">
-                <button onclick="copyText()">📋 Copy Text</button>
-                <button onclick="window.print()">📥 Print/PDF</button>
+                <button onclick="downloadPDF()">📄 Download PDF</button>
+                <button onclick="downloadDOCX()">📝 Download DOCX</button>
+                <button onclick="copyText()">📋 Copy</button>
             </div>
         </div>
 
@@ -420,34 +568,29 @@ let signatureDataUrl = null;
 
 const templates = [
     {
-        name: 'Formal Centered',
-        bgColor: '#faf7f2',
-        headerBorder: '2px solid #000',
-        colors: { text: '#000', detail: '#666' }
+        name: 'template1',
+        displayName: 'Centered Formal',
+        class: 'template1'
     },
     {
-        name: 'Professional Blue',
-        bgColor: '#f5f8fc',
-        headerBorder: '3px solid #1e5a96',
-        colors: { text: '#000', detail: '#555', accent: '#1e5a96' }
+        name: 'template2',
+        displayName: 'Left Accent Blue',
+        class: 'template2'
     },
     {
-        name: 'Modern Clean',
-        bgColor: '#ffffff',
-        headerBorder: '1px solid #e0e0e0',
-        colors: { text: '#000', detail: '#666' }
+        name: 'template3',
+        displayName: 'Modern Green',
+        class: 'template3'
     },
     {
-        name: 'Executive Green',
-        bgColor: '#f9faf8',
-        headerBorder: '4px solid #2d6a4f',
-        colors: { text: '#000', detail: '#555', accent: '#2d6a4f' }
+        name: 'template4',
+        displayName: 'Minimal Red Top',
+        class: 'template4'
     },
     {
-        name: 'Classic Formal',
-        bgColor: '#fefdfb',
-        headerBorder: '2px dashed #333',
-        colors: { text: '#1a1a1a', detail: '#555' }
+        name: 'template5',
+        displayName: 'Elegant Border',
+        class: 'template5'
     }
 ];
 
@@ -463,6 +606,26 @@ function handleSignatureUpload() {
     }
 }
 
+function formatContent(text) {
+    let formatted = escapeHtml(text);
+    
+    // Bold key certification words
+    const keywords = ['certify', 'confirm', 'confirm that', 'to certify', 'hereby certify', 'hereby confirm'];
+    keywords.forEach(keyword => {
+        const regex = new RegExp(`(${keyword})`, 'gi');
+        formatted = formatted.replace(regex, '<strong>$1</strong>');
+    });
+    
+    // Bold titles/positions
+    formatted = formatted.replace(/([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\s+(of|at|in)\s+([A-Z])/g, '<strong>$1</strong> $2 $3');
+    
+    // Handle paragraph breaks
+    formatted = formatted.replace(/\n\n/g, '</p><p>');
+    formatted = formatted.replace(/\n/g, '<br>');
+    
+    return '<p>' + formatted + '</p>';
+}
+
 function updatePreview() {
     const template = templates[currentTemplate];
     const companyName = document.getElementById('companyName').value || 'COMPANY NAME';
@@ -471,7 +634,7 @@ function updatePreview() {
     const companyPhone = document.getElementById('companyPhone').value || '';
     const companyEmail = document.getElementById('companyEmail').value || '';
     const regNumber = document.getElementById('regNumber').value || '';
-
+    
     const recipientBlock = document.getElementById('recipientBlock').value || '';
     const letterSubject = document.getElementById('letterSubject').value || '';
     const greeting = document.getElementById('greeting').value || 'Dear Sir/Madam,';
@@ -483,60 +646,72 @@ function updatePreview() {
     const bodyCount = letterBody.length;
     document.getElementById('bodyCount').textContent = Math.min(bodyCount, 5000);
 
-    const headerHtml = `
-        <div class="header-centered">
-            <div class="logo-box">${escapeHtml(logoText)}</div>
+    let headerHtml = '';
+    if (template.class === 'template1' || template.class === 'template3' || template.class === 'template5') {
+        // Centered layouts
+        headerHtml = `
             <div style="text-align: center;">
+                <div class="logo-box">${escapeHtml(logoText)}</div>
                 <p class="company-name">${escapeHtml(companyName)}</p>
                 ${regNumber ? '<p class="company-detail">' + escapeHtml(regNumber) + '</p>' : ''}
+                <p class="company-detail" style="margin-top: 6px;">${escapeHtml(companyAddress).replace(/\n/g, '<br>')}</p>
+                ${companyPhone ? '<p class="company-detail">' + escapeHtml(companyPhone) + '</p>' : ''}
+                ${companyEmail ? '<p class="company-detail">' + escapeHtml(companyEmail) + '</p>' : ''}
             </div>
-        </div>
-        <div style="text-align: center; margin-top: 8px;">
-            <p class="company-detail" style="margin: 1px 0;">${escapeHtml(companyAddress).replace(/\n/g, '<br>')}</p>
+        `;
+    } else if (template.class === 'template2') {
+        // Left aligned with accent
+        headerHtml = `
+            <div class="logo-box">${escapeHtml(logoText)}</div>
+            <div class="company-info">
+                <p class="company-name">${escapeHtml(companyName)}</p>
+                ${regNumber ? '<p class="company-detail">' + escapeHtml(regNumber) + '</p>' : ''}
+                <p class="company-detail">${escapeHtml(companyAddress).replace(/\n/g, '<br>')}</p>
+                ${companyPhone ? '<p class="company-detail">' + escapeHtml(companyPhone) + '</p>' : ''}
+                ${companyEmail ? '<p class="company-detail">' + escapeHtml(companyEmail) + '</p>' : ''}
+            </div>
+        `;
+    } else if (template.class === 'template4') {
+        // Minimal left-aligned
+        headerHtml = `
+            <div class="logo-box">${escapeHtml(logoText)}</div>
+            <p class="company-name">${escapeHtml(companyName)}</p>
+            ${regNumber ? '<p class="company-detail">' + escapeHtml(regNumber) + '</p>' : ''}
+            <p class="company-detail">${escapeHtml(companyAddress).replace(/\n/g, '<br>')}</p>
             ${companyPhone ? '<p class="company-detail">' + escapeHtml(companyPhone) + '</p>' : ''}
             ${companyEmail ? '<p class="company-detail">' + escapeHtml(companyEmail) + '</p>' : ''}
-        </div>
-    `;
-
-    const formatBody = (text) => {
-        let formatted = escapeHtml(text);
-        formatted = formatted.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-        formatted = formatted.replace(/\n\n/g, '</p><p>');
-        formatted = formatted.replace(/\n/g, '<br>');
-        return '<p>' + formatted + '</p>';
-    };
+        `;
+    }
 
     let letterHtml = `
-        <div class="letter-content" style="background: ${template.bgColor}; min-height: 100%;">
-            <div class="letter-header" style="border-bottom: ${template.headerBorder}; color: ${template.colors.text};">
+        <div class="letter-content ${template.class}">
+            <div class="letter-header">
                 ${headerHtml}
             </div>
 
-            <div class="date-line" style="color: ${template.colors.detail};">
+            <div class="date-line">
                 Date: ${new Date().toLocaleDateString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric' })}
             </div>
 
-            <div class="recipient-block" style="color: ${template.colors.text};">
+            <div class="recipient-block">
                 <strong>${escapeHtml(recipientBlock).replace(/\n/g, '<br>')}</strong>
             </div>
 
-            ${letterSubject ? '<div class="letter-subject" style="color: ' + template.colors.text + ';"><strong>Subject: ' + escapeHtml(letterSubject) + '</strong></div>' : ''}
+            ${letterSubject ? '<div class="letter-subject"><strong>Subject: ' + escapeHtml(letterSubject) + '</strong></div>' : ''}
 
-            <div class="greeting" style="color: ${template.colors.text};">${escapeHtml(greeting)}</div>
+            <div class="greeting">${escapeHtml(greeting)}</div>
 
-            <div class="letter-body" style="color: ${template.colors.text};">
-                ${formatBody(letterBody)}
+            <div class="letter-body">
+                ${formatContent(letterBody)}
             </div>
 
-            <div class="closing-text" style="color: ${template.colors.text};">${escapeHtml(closing)}</div>
+            <div class="closing-text">${escapeHtml(closing)}</div>
 
             <div class="signature-area">
                 <div id="sigContainer"></div>
-                <div class="sig-name" style="color: ${template.colors.text};">${escapeHtml(signerName)}</div>
-                <div class="sig-title" style="color: ${template.colors.detail};">${escapeHtml(signerTitle)}</div>
+                <div class="sig-name">${escapeHtml(signerName)}</div>
+                <div class="sig-title">${escapeHtml(signerTitle)}</div>
             </div>
-
-            <div class="footer-seal">${template.name}</div>
         </div>
     `;
 
@@ -574,6 +749,7 @@ function resetAll() {
     document.getElementById('signerTitle').value = 'Chief Executive Officer';
     document.getElementById('letterBody').value = 'This is to certify that Mr. John Doe is an employee of Acme Corporation, a registered company operating in the United States.\n\nMr. Doe has been with our organization for the past 5 years and holds the position of Senior Manager. He is responsible for strategic planning and business development.\n\nDuring his tenure, Mr. Doe has demonstrated exceptional performance and commitment to the organization. We confirm that he will be on approved leave for his upcoming travel and will resume his professional duties upon return.\n\nWe further confirm that Mr. Doe has strong professional and financial ties to the United States and all travel expenses will be borne by him personally.';
     signatureDataUrl = null;
+    currentTemplate = 0;
     updatePreview();
 }
 
@@ -582,7 +758,86 @@ function copyText() {
     navigator.clipboard.writeText(text).then(() => alert('Letter copied to clipboard!'));
 }
 
-// Initialize on load
+function downloadPDF() {
+    const element = document.getElementById('letterPreview');
+    const opt = {
+        margin: 10,
+        filename: 'cover-letter.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(element).save();
+}
+
+function downloadDOCX() {
+    const companyName = document.getElementById('companyName').value;
+    const letterBody = document.getElementById('letterBody').value;
+    const signerName = document.getElementById('signerName').value;
+    const signerTitle = document.getElementById('signerTitle').value;
+    const closing = document.getElementById('closing').value;
+    
+    const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType } = window.docx;
+    
+    const doc = new Document({
+        sections: [{
+            children: [
+                new Paragraph({
+                    text: companyName,
+                    heading: HeadingLevel.HEADING_1,
+                    alignment: AlignmentType.CENTER,
+                    spacing: { after: 100 }
+                }),
+                new Paragraph({
+                    text: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                    spacing: { after: 200 }
+                }),
+                new Paragraph({
+                    text: document.getElementById('recipientBlock').value,
+                    spacing: { after: 200 }
+                }),
+                new Paragraph({
+                    text: 'Subject: ' + document.getElementById('letterSubject').value,
+                    spacing: { after: 200 }
+                }),
+                new Paragraph({
+                    text: document.getElementById('greeting').value,
+                    spacing: { after: 200 }
+                }),
+                ...letterBody.split('\n\n').map(para => 
+                    new Paragraph({
+                        text: para,
+                        spacing: { after: 200 },
+                        alignment: AlignmentType.JUSTIFIED
+                    })
+                ),
+                new Paragraph({
+                    text: closing,
+                    spacing: { after: 300 }
+                }),
+                new Paragraph({
+                    text: signerName,
+                    spacing: { after: 0 }
+                }),
+                new Paragraph({
+                    text: signerTitle
+                })
+            ]
+        }]
+    });
+    
+    Packer.toBlob(doc).then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'cover-letter.docx';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+    });
+}
+
 window.addEventListener('load', () => {
     updatePreview();
 });
